@@ -1,0 +1,5 @@
+{
+  "name": "STREAMORA",
+  "description": "A premium, cinematic movie streaming platform built with React, Tailwind CSS, and Framer Motion.",
+  "requestFramePermissions": []
+}

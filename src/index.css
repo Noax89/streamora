@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bebas Neue", "Oswald", sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand: #E50914; /* Netflix Red */
+  --color-surface: #0B0B0F;
+  --color-surface-light: #121212;
+  --color-surface-lighter: #1E1E24;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-white font-sans antialiased selection:bg-brand selection:text-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-wider uppercase;
+  }
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-brand hover:bg-red-700 text-white px-6 py-2 rounded-md font-semibold transition-all flex items-center gap-2 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-white/20 hover:bg-white/30 text-white px-6 py-2 rounded-md font-semibold transition-all flex items-center gap-2 active:scale-95 backdrop-blur-sm;
+  }
+
+  .movie-row-scroll {
+    @apply flex overflow-x-auto gap-4 pb-8 scrollbar-hide scroll-smooth px-4 md:px-12;
+  }
+}
+
+/* Custom animations */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #121212 25%, #1e1e24 50%, #121212 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
