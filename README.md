@@ -4,6 +4,9 @@ Streamora is a high-performance, production-grade movie discovery and streaming 
 
 ![Streamora Preview](https://streamora-teal.vercel.app)
 
+## Link
+https://streamora-teal.vercel.app 
+
 ## 🚀 Key Features
 
 - **Dynamic Hero Section:** Featured trending movies with high-quality backdrops and quick-action buttons.
