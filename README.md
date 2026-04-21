@@ -2,7 +2,10 @@
 
 Streamora is a high-performance, production-grade movie discovery and streaming platform built with **React 19**, **TypeScript**, and **Tailwind CSS**. It leverages the **TMDB API** to provide real-time movie data, trailers, and personalized watchlists with a cinematic user interface.
 
-![Streamora Preview](https://picsum.photos/seed/streamora/1200/600)
+![Streamora Preview](https://streamora-teal.vercel.app)
+
+## Link
+https://streamora-teal.vercel.app 
 
 ## 🚀 Key Features
 
