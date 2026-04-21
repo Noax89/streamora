@@ -26,11 +26,20 @@ export const endpoints = {
   watchProviders: (id: string) => `/movie/${id}/watch/providers`,
   search: '/search/movie',
   genres: '/genre/movie/list',
+  tvGenres: '/genre/tv/list',
+  trendingTv: '/trending/tv/week',
+  popularTv: '/tv/popular',
+  tvDetails: (id: string | number) => `/tv/${id}`,
+  tvVideos: (id: string | number) => `/tv/${id}/videos`,
+  tvCredits: (id: string | number) => `/tv/${id}/credits`,
+  tvSeason: (id: string | number, season: string | number) => `/tv/${id}/season/${season}`,
+  tvEpisodeVideos: (id: string | number, season: string | number, episode: string | number) => `/tv/${id}/season/${season}/episode/${episode}/videos`,
   personDetails: (id: string) => `/person/${id}`,
   personMovieCredits: (id: string) => `/person/${id}/movie_credits`,
   upcomingMovies: '/movie/upcoming',
   nowPlaying: '/movie/now_playing',
   discover: '/discover/movie',
+  discoverTv: '/discover/tv',
 };
 
 export interface Genre {
@@ -38,15 +47,63 @@ export interface Genre {
   name: string;
 }
 
-export interface Movie {
+export interface Media {
   id: number;
-  title: string;
+  title?: string;
+  name?: string;
   overview: string;
   poster_path: string;
   backdrop_path: string;
-  release_date: string;
+  release_date?: string;
+  first_air_date?: string;
   vote_average: number;
   genre_ids: number[];
+  media_type?: 'movie' | 'tv';
+  original_language?: string;
+}
+
+export type Movie = Media;
+export type TvShow = Media;
+
+export interface Season {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  episode_count: number;
+  air_date: string;
+}
+
+export interface Episode {
+  id: number;
+  name: string;
+  overview: string;
+  still_path: string;
+  episode_number: number;
+  season_number: number;
+  air_date: string;
+  vote_average: number;
+}
+
+export interface SeasonDetails {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  episodes: Episode[];
+}
+
+export interface TvShowDetails extends Media {
+  genres: Genre[];
+  tagline: string;
+  status: string;
+  number_of_seasons: number;
+  number_of_episodes: number;
+  seasons: Season[];
+  last_episode_to_air?: Episode;
+  created_by: { id: number; name: string }[];
 }
 
 export interface PersonDetails {

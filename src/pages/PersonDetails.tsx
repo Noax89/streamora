@@ -47,6 +47,8 @@ export const PersonDetails = () => {
                 src={getImageUrl(person.profile_path, 'original')}
                 alt={person.name}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
             </motion.div>

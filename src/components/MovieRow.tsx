@@ -3,15 +3,17 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MovieCard } from './MovieCard';
 import { Movie } from '../services/tmdb';
 import { cn } from '../utils/cn';
+import { Link } from 'react-router-dom';
 
 interface MovieRowProps {
   title: string;
   movies: Movie[];
   isLoading?: boolean;
   className?: string;
+  category?: string;
 }
 
-export const MovieRow = ({ title, movies, isLoading, className }: MovieRowProps) => {
+export const MovieRow = ({ title, movies, isLoading, className, category }: MovieRowProps) => {
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -28,7 +30,7 @@ export const MovieRow = ({ title, movies, isLoading, className }: MovieRowProps)
         <div className="h-8 w-48 bg-surface-light rounded-md mb-6 animate-shimmer" />
         <div className="flex gap-4 overflow-hidden">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="min-w-200px aspect-2/3 bg-surface-light rounded-xl animate-shimmer" />
+            <div key={i} className="min-w-50 aspect-2/3 bg-surface-light rounded-xl animate-shimmer" />
           ))}
         </div>
       </div>
@@ -39,10 +41,20 @@ export const MovieRow = ({ title, movies, isLoading, className }: MovieRowProps)
 
   return (
     <div className={cn("group relative py-8", className)}>
-      <h2 className="text-xl md:text-2xl font-bold px-4 md:px-12 mb-6 tracking-wide flex items-center gap-3">
-        <span className="w-1 h-6 bg-brand rounded-full" />
-        {title}
-      </h2>
+      <div className="flex items-center justify-between px-4 md:px-12 mb-6">
+        <h2 className="text-xl md:text-2xl font-bold tracking-wide flex items-center gap-3">
+          <span className="w-1 h-6 bg-brand rounded-full" />
+          {title}
+        </h2>
+        {category && (
+          <Link
+            to={`/movies/${category}`}
+            className="text-sm font-bold text-brand hover:text-brand-light transition-colors uppercase tracking-widest"
+          >
+            View All
+          </Link>
+        )}
+      </div>
 
       <div className="relative">
         <button

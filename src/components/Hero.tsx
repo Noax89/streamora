@@ -17,6 +17,8 @@ export const Hero = ({ movie }: HeroProps) => {
           src={getImageUrl(movie.backdrop_path, 'original')}
           alt={movie.title}
           className="w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/40 to-transparent" />
@@ -38,7 +40,7 @@ export const Hero = ({ movie }: HeroProps) => {
               <Star className="w-4 h-4 fill-current" />
               <span className="text-sm font-bold">{movie.vote_average.toFixed(1)}</span>
             </div>
-            <span className="text-gray-400 text-sm">{movie.release_date.split('-')[0]}</span>
+            <span className="text-gray-400 text-sm">{movie.release_date?.split('-')[0]}</span>
           </div>
 
           <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-6 drop-shadow-2xl">

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Play, X, ChevronLeft, ChevronRight, Youtube } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useMovies } from '../hooks/useMovies';
 import { endpoints, getImageUrl, tmdbApi } from '../services/tmdb';
 import { cn } from '../utils/cn';
@@ -26,8 +27,12 @@ export const TrailerSection = () => {
       const trailer = data.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
       if (trailer) {
         setActiveTrailer({ key: trailer.key, title });
-        // Scroll to the player
-        window.scrollTo({ top: document.getElementById('trailer-player')?.offsetTop ? document.getElementById('trailer-player')!.offsetTop - 100 : window.scrollY, behavior: 'smooth' });
+        setTimeout(() => {
+          const player = document.getElementById('trailer-player');
+          if (player) {
+            window.scrollTo({ top: player.offsetTop - 100, behavior: 'smooth' });
+          }
+        }, 100);
       } else {
         alert('No trailer found for this movie.');
       }
@@ -44,10 +49,18 @@ export const TrailerSection = () => {
     <div className="py-12 bg-surface-light/30 border-y border-white/5">
       <div className="px-4 md:px-12 mb-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
-            <span className="w-1 h-8 bg-brand rounded-full" />
-            Latest Trailers
-          </h2>
+          <div className="flex items-center gap-6">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
+              <span className="w-1 h-8 bg-brand rounded-full" />
+              Latest Trailers
+            </h2>
+            <Link
+              to="/movies/trailers"
+              className="text-sm font-bold text-brand hover:text-brand-light transition-colors uppercase tracking-widest hidden sm:block"
+            >
+              View All
+            </Link>
+          </div>
           <div className="flex gap-2">
             <button
               onClick={() => scroll('left')}
@@ -79,6 +92,7 @@ export const TrailerSection = () => {
                 src={`https://www.youtube.com/embed/${activeTrailer.key}?autoplay=1`}
                 title={activeTrailer.title}
                 className="w-full h-full"
+                loading="lazy"
                 allowFullScreen
                 allow="autoplay"
               />
@@ -109,12 +123,14 @@ export const TrailerSection = () => {
             <div
               key={movie.id}
               className="min-w-70 md:min-w-[320px] aspect-video relative rounded-xl overflow-hidden cursor-pointer group/item border border-white/5 hover:border-brand/50 transition-all"
-              onClick={() => handlePlayTrailer(movie.id, movie.title)}
+              onClick={() => handlePlayTrailer(movie.id, movie.title || '')}
             >
               <img
                 src={getImageUrl(movie.backdrop_path)}
-                alt={movie.title}
+                alt={movie.title || 'Movie'}
                 className="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
@@ -130,13 +146,13 @@ export const TrailerSection = () => {
               </div>
 
               <div className="absolute bottom-4 left-4 right-4">
-                <h4 className="text-white font-bold text-lg line-clamp-1 mb-1">{movie.title}</h4>
+                <h4 className="text-white font-bold text-lg line-clamp-1 mb-1">{movie.title || 'Untitled'}</h4>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-brand bg-brand/10 px-2 py-0.5 rounded border border-brand/20">
                     Trailer
                   </span>
                   <span className="text-xs text-gray-400">
-                    {movie.release_date.split('-')[0]}
+                    {movie.release_date?.split('-')[0] || ''}
                   </span>
                 </div>
               </div>
